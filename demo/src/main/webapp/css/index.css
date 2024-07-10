@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+	margin: 0;
+}
+*{
+	box-sizing: border-box;
+}
+@keyframes moiveAnimation {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+.content1 {
+	background: linear-gradient(-45deg, #fff6e9, #d1cabb, #b6b5b3);
+	background-size: 500% 500%;
+	animation: moiveAnimation 10s;
+	height: 100px;
+	width: 100%;
+    border: 1px solid black;
+}
+
+.content2 {
+	background: linear-gradient(-45deg, #fff6e9, #d1cabb, #b6b5b3);
+	background-size: 500% 500%;
+	animation: moiveAnimation 15s;
+	height: 100%;
+	width: 100%;
+    border: 1px solid black;
+}
+
+.button{
+	text-align: right;
+	margin-top: 55px;
+	margin-right: 30px;
+}
+
+table{
+	margin-top: 100px;
+	text-align: center;
+	width: 100%;
+	font-family: verdana,arial,sans-serif;
+    font-size:13px;
+    color:#333333;
+	border-width: 1px;
+    border-color: #666666;
+ border-collapse: collapse;
+}
+table th{
+	border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+table td{
+	border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
+.t_list{
+	background: linear-gradient(-45deg, #fff6e9, #d1cabb, #b6b5b3);
+	background-size: 500% 500%;
+	animation: moiveAnimation 15s;
+}
+
+.t_list a{
+	color: #0076f4;
+}
+.t_list a:hover{
+	color: #15aef4;
+}
+.t_list a::after{
+	color: #0076f4;
+}

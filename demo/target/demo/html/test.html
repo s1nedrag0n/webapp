@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/qs.js"></script>
+</head>
+<body>
+<div id="etable">
+    <form @submit.prevent="search">
+        <label for="origin">出发地</label>
+        <input v-model="origin" required>&nbsp;
+        <label for="dest">目的地</label>
+        <input v-model="dest" required>&nbsp;
+        <button type="submit">查询</button>
+    </form>
+
+</div>
+    <script>
+
+       var vm = new Vue({
+        el:"#etable",
+        data:{
+            origin:"",
+            dest:""
+        },
+        methods:{
+            search:function(){
+                
+
+                axios({
+                    method:"post",
+                    url:"../index",
+                    data:Qs.stringify({
+                        origin:this.origin,
+                        dest:this.dest
+                    })
+                }).then(res=>{
+                    console.log(res)
+                })
+            }
+        }
+    })
+        
+    </script>
+
+</body>
+</html>

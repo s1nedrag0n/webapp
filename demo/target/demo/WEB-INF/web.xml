@@ -1,0 +1,75 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <session-config>
+    <session-timeout>15</session-timeout>
+  </session-config>
+
+  <servlet>
+    <servlet-name>index</servlet-name>
+    <servlet-class>com.proj.index</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>login</servlet-name>
+    <servlet-class>com.proj.login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>login</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+    <servlet>
+    <servlet-name>register</servlet-name>
+    <servlet-class>com.proj.register</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>register</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>jwtcheck</servlet-name>
+    <servlet-class>com.proj.jwtcheck</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jwtcheck</servlet-name>
+    <url-pattern>/jwtcheck</url-pattern>
+  </servlet-mapping>
+
+    <servlet>
+    <servlet-name>pay</servlet-name>
+    <servlet-class>com.proj.pay</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>pay</servlet-name>
+    <url-pattern>/pay</url-pattern>
+  </servlet-mapping>
+
+    <servlet>
+    <servlet-name>mine</servlet-name>
+    <servlet-class>com.proj.mine</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mine</servlet-name>
+    <url-pattern>/mine</url-pattern>
+  </servlet-mapping>
+
+  
+    <servlet>
+    <servlet-name>delete</servlet-name>
+    <servlet-class>com.proj.delete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>delete</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+</web-app>

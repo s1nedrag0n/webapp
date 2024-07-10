@@ -1,0 +1,109 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/qs.js"></script>
+</head>
+<body>
+<div id="etable">
+<div class="content2">
+<div style="text-align: center;">订票详情-{{uname}}</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>车次</th>
+            <th>出发站/到达站</th>
+            <th>出发时间/到达时间</th>
+            <th>历时</th>
+            <th>花费</th>
+            <th>票级</th>
+            <th>备注</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="(record,index) in records">
+            <td>{{record.train_name}}</td>
+            <td>{{record.origin}}/{{record.dest}}</td>
+            <td>{{record.start_time}}/{{record.end_time}}</td>
+            <td>{{record.spend}}</td>
+            <td v-if="record.type === '1' ">￥{{record.price1}}</td>
+            <td v-else>￥{{record.price}}</td>
+            <td v-if="record.type === '1' ">一等座</td>
+            <td v-else>二等座</td>
+            <td>
+
+                <a href="javascript:" @click="check(record)">删除</a>
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+</div>
+</div>
+<script>
+    var params = new URLSearchParams(window.location.search);
+    var uid = params.get('uid');
+    var uname = params.get('uname');
+    var token = localStorage.getItem("token");
+    var vm = new Vue({
+        el:"#etable",
+        data:{
+            records:[],
+            uname:"",
+            uid:""
+        },
+        mounted(){
+            this.init();
+
+            axios({
+                method:"post",
+                url:"../jwtcheck",
+                data:Qs.stringify({
+                    token:token
+                })
+            }).then(res=>{
+                    this.uname=res.data[0].uname;
+                    this.uid=res.data[0].uid;
+            })
+
+            axios({
+                method:"post",
+                url:"../mine",
+                data:Qs.stringify({
+                    uid:this.uid
+                })
+            }).then(res=>{
+                this.records=res.data;
+            })
+        },
+        methods:{
+            init:function(){
+                this.uid=uid;
+                this.uname=uname;
+            },
+            check:function(record){
+                axios({
+                method:"post",
+                url:"../delete",
+                data:Qs.stringify({
+                    tid:record.ticket_id,
+                    uid:this.uid
+                })
+            }).then(res=>{
+                if(res.data=="e"){
+                    alert("出错！");
+                }else{
+                    alert("操作成功！");
+                    window.location.assign(window.location);
+                }
+            })
+            }
+        }
+    })
+</script>
+</body>
+</html>

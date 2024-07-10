@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/qs.js"></script>
+    <title>登录</title>
+</head>
+<body>
+<div class="content2" style="margin-top:10px; text-align: center;" id="ptable">
+    <div>
+        <div>请选择车票类型</div>
+
+        <form @submit.prevent="commit">
+            <label>选票:</label>
+            <input type="radio" id="one" name="type" value="1" v-model="type" required>
+            <label for="first">一等座</label>
+            <input type="radio" id="two" name="type" value="2" v-model="type" required>
+            <label for="second">二等座</label>
+            <br>
+            <br>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>车次</th>
+                    <th>出发站/到达站</th>
+                    <th>出发时间/到达时间</th>
+                    <th>历时</th>
+                    <th>一等座</th>
+                    <th>二等座</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ticket.train_name}}</td>
+                    <td>{{ticket.origin}}/{{ticket.dest}}</td>
+                    <td>{{ticket.start_time}}/{{ticket.end_time}}</td>
+                    <td>{{ticket.spend}}</td>
+                    <td>￥{{ticket.price1}}</td>
+                    <td>￥{{ticket.price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+        var params = new URLSearchParams(window.location.search);
+        var uid = params.get('uid');
+        var obj = params.get('obj');
+        var ticket = JSON.parse(obj);
+        
+        var vm = new Vue({
+        el:"#ptable",
+        data:{
+            ticket:[],
+            uid:"",
+            type:""
+        },
+        mounted(){
+            this.init();
+        },
+        methods:{
+            init(){
+                this.ticket = ticket;
+                this.uid = uid;
+                console.log(this.ticket);
+                console.log(this.uid);
+            },
+            commit:function(){
+                axios({
+                    method:"post",
+                    url:"../pay",
+                    data:Qs.stringify({
+                        tid:this.ticket.ticket_id,
+                        uid:this.uid,
+                        type:this.type
+                    })
+                }).then(res=>{
+                    if(res.data=="e"){
+                        alert("服务器出错，交易失败！");
+                        window.location.href="../index.html";
+                    }else if(res.data=="s"){
+                        alert("交易成功！可到个人中心查看票单信息.");
+                        window.location.href="../index.html";
+                    }
+                })
+            }
+        }
+    })
+    </script>
+
+</body>
+</html>

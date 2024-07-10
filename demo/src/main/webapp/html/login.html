@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <script src="../js/qs.js"></script>
+    <title>登录</title>
+</head>
+<body>
+<div class="content" id="login_reg">
+
+<!--登录-->
+<div v-if="page">
+    <div>欢迎登录12306</div>
+    <br>
+    <br>
+    <form id="login_reg" @submit.prevent="submit_login">
+        <label for="uname">用户名</label>
+        <input v-model="uname" required>
+        <br>
+        <br>
+        <label for="password">密码</label>
+        <input type="password" v-model="pwd" required>
+        <br>
+        <br>
+        <button type="submit">立即登录</button>
+    </form>
+    <br>
+    <button @click="transpages">注册</button>
+</div>
+
+<!--注册-->
+<div v-else>
+    <div>请填写相关信息</div>
+    <br>
+    <br>
+    <form id="login_reg" @submit.prevent="submit_reg">
+        <label for="name">姓名</label>
+        <input v-model="name" required>
+        <br>
+        <br>
+        <label>性别:</label>
+        <input type="radio" id="one" value="m" v-model="sex" required>
+        <label for="male">男</label>
+        <input type="radio" id="two" value="f" v-model="sex" required>
+        <label for="female">女</label>
+        <br>
+        <br>
+        <label for="birth">出生年份</label>
+        <input type="date" v-model="birth" required>
+        <br>
+        <br>
+        <label for="id">身份证号</label>
+        <input v-model="id" required>
+        <br>
+        <br>
+        <label for="phonenum">手机号</label>
+        <input v-model="phonenum" required>
+        <br>
+        <br>
+        <label for="uname">用户名</label>
+        <input v-model="uname" required>
+        <br>
+        <br>
+        <label for="pwd">密码</label>
+        <input type="password" v-model="pwd" required>
+        <br>
+        <br>
+        <label for="pwd2">确认密码</label>
+        <input type="password" v-model="pwd2" required>
+        <br>
+        <br>
+        <button type="submit">注册账号</button>
+    </form>
+    <br>
+    <button @click="transpages">返回登录</button>
+</div>
+</div>
+    <script>
+        var vm = new Vue({
+            el:"#login_reg",
+            data:{
+                page:true,
+                id:"",
+                uname:"",
+                pwd:"",
+                pwd2:"",
+                name:"",
+                sex:"",
+                birth:"",
+                phonenum:"",
+            },
+            methods:{
+                submit_login:function(){
+                    axios({
+                        method:"post",
+                        url:"../login",
+                        data:Qs.stringify({
+                            uname:this.uname,
+                            pwd:this.pwd,
+                        })
+                    }).then(res=>{
+                        if(res.data=="e1"){
+                            alert("user not exists!");
+                        }else if(res.data=="e2"){
+                            alert("wrong password!");
+                        }else{
+                            var token=res.data;
+                            localStorage.setItem("token",token);
+                            //location.href="../index.html?"+"&"+token+"&"+this.uname;
+                            window.location.assign("../index.html");
+                        }
+                    })
+                },
+                submit_reg:function(){
+                    if(this.pwd!=this.pwd2){
+                        alert("两次密码输入不同！");
+                        return;
+                    }
+                    
+                    axios({
+                        method:"post",
+                        url:"../register",
+                        data:Qs.stringify({
+                            id:this.id,
+                            uname:this.uname,
+                            pwd:this.pwd,
+                            name:this.name,
+                            sex:this.sex,
+                            birth:this.birth,
+                            phonenum:this.phonenum
+                        })
+                    }).then(res=>{
+                        alert(res.data);
+                    })
+                },
+                transpages:function(){
+                    this.page= !this.page;
+                }
+            }
+        })
+        
+    </script>
+
+</body>
+</html>
